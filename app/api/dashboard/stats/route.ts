@@ -50,12 +50,19 @@ export async function GET(request: NextRequest) {
       .order('invoice_date', { ascending: false })
       .limit(5);
 
-    const formattedRecentPurchases = recentPurchasesData?.map(p => ({
-      id: p.id,
-      supplier: p.suppliers?.name || 'N/A',
-      date: p.invoice_date,
-      amount: parseFloat(p.total_amount),
-    })) || [];
+    const formattedRecentPurchases = recentPurchasesData?.map(p => {
+      // Handle both array and object cases for suppliers
+      const supplier = Array.isArray(p.suppliers) 
+        ? p.suppliers[0]?.name 
+        : (p.suppliers as any)?.name;
+      
+      return {
+        id: p.id,
+        supplier: supplier || 'N/A',
+        date: p.invoice_date,
+        amount: parseFloat(p.total_amount),
+      };
+    }) || [];
 
     // Alertes de stock bas
     const { data: lowStockData } = await supabaseAdmin

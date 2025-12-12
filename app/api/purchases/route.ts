@@ -32,10 +32,17 @@ export async function GET(request: NextRequest) {
     if (error) throw error;
 
     // Formater les données
-    const formattedData = data?.map(p => ({
-      ...p,
-      supplier_name: p.suppliers?.name,
-    })) || [];
+    const formattedData = data?.map(p => {
+      // Handle both array and object cases for suppliers
+      const supplier = Array.isArray(p.suppliers) 
+        ? p.suppliers[0]?.name 
+        : (p.suppliers as any)?.name;
+      
+      return {
+        ...p,
+        supplier_name: supplier,
+      };
+    }) || [];
 
     return NextResponse.json(formattedData);
   } catch (error) {
