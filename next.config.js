@@ -13,9 +13,6 @@ const nextConfig = {
     NEXT_PUBLIC_APP_NAME: 'Banana Restaurant',
     NEXT_PUBLIC_APP_VERSION: '1.0.0',
   },
-  experimental: {
-    serverActions: true,
-  },
   // Configuration pour Vercel
   async headers() {
     return [
