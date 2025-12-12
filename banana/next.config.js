@@ -5,7 +5,7 @@ const nextConfig = {
   images: {
     domains: [
       'localhost',
-      'your-project.supabase.co',
+      'jqnqngfopmlghqdrvjhw.supabase.co',
     ],
     formats: ['image/avif', 'image/webp'],
   },
